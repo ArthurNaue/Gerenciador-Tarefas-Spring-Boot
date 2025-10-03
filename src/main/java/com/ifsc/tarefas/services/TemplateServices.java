@@ -196,12 +196,12 @@ public class TemplateServices
         if (br.hasErrors()) 
         {
             model.addAttribute("categoria", categoria);
-            model.addAttribute("erros", "Erro ao salvar tarefa, preencha os campos corretamente.");
+            model.addAttribute("erros", "Erro ao salvar categoria, preencha os campos corretamente.");
 
-            return "nova_tarefa";
+            return "nova_categoria";
         }
 
-        ra.addFlashAttribute("sucesso", "Tarefa salva com sucesso!");
+        ra.addFlashAttribute("sucesso", "Categoria salva com sucesso!");
 
         categoriaRepository.save(categoria);
 
@@ -250,7 +250,7 @@ public class TemplateServices
         return "nova_categoria";
     }
 
-    @GetMapping("/{tarefaId}/associar-categoria")
+    @GetMapping("/{tarefaId}/associar_categoria")
     String associarTarefaParaUmaCategoria(Model model, @PathVariable Long tarefaId) 
     {
         List<Categoria> categorias = categoriaRepository.findAll();
@@ -265,7 +265,7 @@ public class TemplateServices
         return "gerenciar-categoria";
     }
 
-    @PostMapping("/{tarefaId}/associar-categoria/{categoriaId}")
+    @PostMapping("/{tarefaId}/associar_categoria_tarefa/{categoriaId}")
     String associarTarefaParaUmaCategoria(@PathVariable Long tarefaId, @PathVariable Long categoriaId) 
     {
         var tarefa = tarefaRepository.findById(tarefaId);
@@ -278,6 +278,7 @@ public class TemplateServices
 
         tarefa.get().getCategorias().add(categoria.get());
         tarefaRepository.save(tarefa.get());
+
         return "redirect:/templates/listar_tarefa";
     }
 }
