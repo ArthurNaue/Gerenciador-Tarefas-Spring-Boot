@@ -14,6 +14,8 @@
                 <p th:text="${erros}"></p>
             </div>
 
+            <input  th:field="*{id}" id="id" class="d-none">
+
             <div class="mb-3">
                 <label for="titulo" class="form-label">Título</label>
                 <input type="text" th:field="*{titulo}" id="titulo" class="form-control">
