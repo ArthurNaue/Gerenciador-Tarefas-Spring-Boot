@@ -24,6 +24,8 @@ import com.ifsc.tarefas.repository.TarefaRepository;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 @Controller
 @RequestMapping("/templates")
@@ -265,15 +267,32 @@ public class TemplateServices
         return "gerenciar-categoria";
     }
 
+    @GetMapping("/{tarefaId}/associar_categoria_tarefa")
+    String listaCategoriaParaUmaTarefa(Model model, @PathVariable Long tarefaId) 
+    {
+        var tarefa = tarefaRepository.findById(tarefaId);
+        var categorias = categoriaRepository.findAll();
+
+        if (tarefa.isEmpty() || categorias.isEmpty()) 
+        {
+            return "redirect:/templates/listar_tarefa";
+        }
+
+        model.addAttribute("tarefa", tarefa.get());
+        model.addAttribute("categorias", categorias);
+
+        return "associar_categoria_tarefa";
+    }
+
     @PostMapping("/{tarefaId}/associar_categoria_tarefa/{categoriaId}")
-    String associarTarefaParaUmaCategoria(@PathVariable Long tarefaId, @PathVariable Long categoriaId) 
+    public String associarCategoriaParaUmaTarefa(@PathVariable Long tarefaId, @PathVariable Long categoriaId) 
     {
         var tarefa = tarefaRepository.findById(tarefaId);
         var categoria = categoriaRepository.findById(categoriaId);
 
         if (tarefa.isEmpty() || categoria.isEmpty()) 
         {
-            return "redirect:/templates/listar_tarefa";
+            return "redirect:/templates/" + tarefaId + "associar_categoria_tarefa";
         }
 
         tarefa.get().getCategorias().add(categoria.get());

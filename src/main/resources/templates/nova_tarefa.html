@@ -19,7 +19,7 @@
             <div class="mb-3">
                 <label for="titulo" class="form-label">Título</label>
                 <input type="text" th:field="*{titulo}" id="titulo" class="form-control">
-            </div>
+            </div>  
 
             <div class="mb-3">
                 <label for="descricao" class="form-label">Descrição</label>
@@ -52,6 +52,9 @@
 
             <div class="d-flex justify-content-between">
                 <button type="submit" class="btn btn-dark">Salvar</button>
+                <div th:if="${tarefa.id} != null">
+                    <a th:href="@{'/templates/' + ${tarefa.id} + '/associar_categoria_tarefa'}" class="btn btn-dark">Associar categoria</a>
+                </div>
                 <a href="/templates/listar_tarefa" class="btn btn-dark">Cancelar</a>
             </div>
         </form>
