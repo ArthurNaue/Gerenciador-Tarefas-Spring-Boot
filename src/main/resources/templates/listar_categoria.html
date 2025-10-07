@@ -46,6 +46,7 @@
                     - <span th:text="${categoria.nome}">Nome</span>
 
                     <div class="d-flex justify-content-between mt-2">
+                        <a th:href="@{'/templates/' + ${categoria.id} + '/tarefas_associadas'}" class="btn btn-outline-dark">Tarefas</a>
                         <a th:href="@{'/templates/categoria/' + ${categoria.id} + '/editar'}" class="btn btn-outline-dark">Editar</a>
                         <form th:action="@{'/templates/categoria/' + ${categoria.id} + '/excluir'}" method="post" class="d-inline">
                             <button type="submit" class="btn btn-outline-dark" onclick="return confirm('Tem certeza que deseja excluir?')">Excluir</button>

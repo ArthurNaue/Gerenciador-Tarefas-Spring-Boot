@@ -24,8 +24,6 @@ import com.ifsc.tarefas.repository.TarefaRepository;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
-import org.springframework.web.bind.annotation.RequestBody;
-
 
 @Controller
 @RequestMapping("/templates")
@@ -299,5 +297,21 @@ public class TemplateServices
         tarefaRepository.save(tarefa.get());
 
         return "redirect:/templates/listar_tarefa";
+    }
+
+    @GetMapping("/{id}/tarefas_associadas")
+    String listarTarefasAssociadas
+    (
+        Model model, 
+        @PathVariable Long id
+    ) 
+    {
+        var categoria = categoriaRepository.findById(id);
+        var listaTarefas = categoria.get().getTarefas();
+
+        model.addAttribute("categoria", categoria.get());
+        model.addAttribute("tarefas", listaTarefas);
+
+        return "tarefas_associadas";
     }
 }
