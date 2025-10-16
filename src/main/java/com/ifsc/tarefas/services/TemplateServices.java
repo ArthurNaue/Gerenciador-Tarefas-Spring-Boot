@@ -254,9 +254,6 @@ public class TemplateServices
             return "redirect:/templates/tarefa/{tarefaId}/editar";
         }
 
-        System.out.println("@@@@@@@");
-        System.out.println(tarefa.get().getCategorias());
-
         model.addAttribute("tarefa", tarefa.get());
         model.addAttribute("categorias", categorias);
         model.addAttribute("listaCategorias", listaCategorias);
@@ -270,18 +267,18 @@ public class TemplateServices
     String editarCategoria(@PathVariable Long id, Model model) 
     {
         var categoria = categoriaRepository.findById(id);
-        var tarefas = tarefaRepository.findAll();
-        var listaTarefas = categoria.get().getTarefas();
+        var listaTarefas = tarefaRepository.findAll();
+        var tarefas = categoria.get().getTarefas();
 
-        if (categoria.isEmpty() || tarefas.isEmpty()) 
+        if (categoria.isEmpty() || listaTarefas.isEmpty()) 
         {
-            return "redirect:/templates/tarefa/{tarefaId}/editar";
+            return "redirect:/templates/categoria/{categoriaId}/editar";
         }
 
         model.addAttribute("categoria", categoria.get());
         model.addAttribute("tarefas", tarefas);
         model.addAttribute("listaTarefas", listaTarefas);
-        
+
         return "nova_categoria";
     }
 
@@ -319,8 +316,8 @@ public class TemplateServices
         return "redirect:/templates/tarefa/{tarefaId}/editar";
     }
 
-    @PostMapping("/{tarefaId}/desassociar_categoria/{categoriaId}")
-    String desassociarCategoria(@PathVariable Long tarefaId, @PathVariable Long categoriaId) 
+    @PostMapping("/{tarefaId}/desassociar_categoria/{categoriaId}/{id}")
+    String desassociarCategoria(@PathVariable Long tarefaId, @PathVariable Long categoriaId, @PathVariable long id) 
     {
         var tarefa = tarefaRepository.findById(tarefaId).orElse(null);
 
@@ -344,6 +341,13 @@ public class TemplateServices
             tarefaRepository.save(tarefa);
         }
 
-        return "redirect:/templates/tarefa/{tarefaId}/editar";
+        if(id == 0)
+        {
+            return "redirect:/templates/tarefa/{tarefaId}/editar";
+        }
+        else
+        {
+            return "redirect:/templates/categoria/{categoriaId}/editar";
+        }
     }
 }

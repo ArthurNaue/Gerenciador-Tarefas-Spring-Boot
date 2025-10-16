@@ -63,7 +63,7 @@
                     <strong th:text="${categoria.id}">Id</strong> 
                     - <span th:text="${categoria.nome}">Nome</span>
                     
-                    <form th:action="@{'/templates/' + ${tarefa.id} + '/desassociar_categoria/' + ${categoria.id}}" method="post" class="d-inline">
+                    <form th:action="@{'/templates/' + ${tarefa.id} + '/desassociar_categoria/' + ${categoria.id} + '/0'}" method="post" class="d-inline">
                         <button type="submit" class="btn btn-outline-dark">Remover</button>
                     </form>
                 </div>

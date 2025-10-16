@@ -10,6 +10,9 @@
     <div class="container">
         <h1 class="text-center">Nova Categoria</h1>
         <form th:action="@{/templates/salvar_categoria}" method="post" th:object="${categoria}">
+            <input  th:field="*{id}" id="id" class="d-none">
+            <input  th:field="*{tarefas}" id="tarefas" class="d-none">
+
             <div th:if="${erros != null}" class="alert alert-danger">
                 <p th:text="${erros}"></p>
             </div>
@@ -24,7 +27,7 @@
         </form>
     </div>
         <ul class="list-unstyled">
-            <div th:if="${sucesso != null}">
+            <div th:if="${sucesso != null}">listaT
                 <p th:text="${sucesso}"></p>
             </div>
             <li class="mb-3" th:each="tarefa : ${tarefas}">
@@ -32,7 +35,7 @@
                     <strong th:text="${tarefa.id}">Id</strong> 
                     - <span th:text="${tarefa.titulo}">Titulo</span>
 
-                    <form th:action="@{'/templates/' + ${tarefa.id} + '/desassociar_categoria/' + ${categoria.id}}" method="post" class="d-inline">
+                    <form th:action="@{'/templates/' + ${tarefa.id} + '/desassociar_categoria/' + ${categoria.id} + '/1'}" method="post" class="d-inline">
                         <button type="submit" class="btn btn-outline-dark">Remover</button>
                     </form>
                 </div>
